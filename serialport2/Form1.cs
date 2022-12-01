@@ -59,10 +59,10 @@ namespace serialport2
         {
             set_serialPort();
             serialPort1.Open();//connect
-            connect_style();
+            connect_object_style();
         }
 
-        private void connect_style()
+        private void connect_object_style()
         {
             Connect_button.Text = "Connected";
             Connect_button.BackColor = Color.GreenYellow;
@@ -109,11 +109,10 @@ namespace serialport2
         private void Disconnect_button_Click(object sender, EventArgs e)
         {
             serialPort1.Dispose();//disconnect
-            //MessageBox.Show("Disconnect is " + serialPort1.IsOpen.ToString());
-            disconnect_style();
+            disconnect_object_style();
         }
 
-        private void disconnect_style()
+        private void disconnect_object_style()
         {
             Connect_button.Text = "Connect";
             Connect_button.BackColor = Color.FromArgb(224, 224, 224);
@@ -204,19 +203,24 @@ namespace serialport2
                 }
                 else
                 {
-                    String production_name = query_database();
-                    product_name_textBox.Text = production_name;
+                    get_ProductionName_and_Total();// Can show in textBox
+                    get_Station();//Can show in comboBox
                 }
             }
         }
 
-        private string query_database()
+        private void get_Station()
         {
 
-            string Connect_Info = setting_info_for_connect();
+        }
+
+        private void get_ProductionName_and_Total()
+        {
+
+            string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
-           
+
             //------Connect---------------------------------------
             try
             {
@@ -240,68 +244,53 @@ namespace serialport2
 
             //----------Quary----------------------------
             String cmdText =
-                "SELECT product_name " +
+                "SELECT product_name,total " +
                 "FROM Production_Information " +
-                "WHERE mo='" + mo_textBox.Text + "'";
-            //String cmdText = "SELECT product_name FROM Production_Information WHERE mo='" + mo_textBox.Text + "'";
+                "WHERE mo='" + mo_textBox.Text.Trim() + "'";
+
 
             try
             {
                 MySqlCommand cmd = new MySqlCommand(cmdText, connect_database);
-                MySqlDataReader myData = cmd.ExecuteReader();
 
-                if (!myData.HasRows)
+                using (MySqlDataReader myData = cmd.ExecuteReader())
                 {
-                    // 如果沒有資料,顯示沒有資料的訊息
-                    //Console.WriteLine("No data.");
-                    MessageBox.Show("No data.");
-                }
-                else
-                {
-                    // 讀取資料並且顯示出來
-                    while (myData.Read())
+                    if (!myData.HasRows)
                     {
-                        //Console.WriteLine("Text={0}", myData.GetString(0));
-                        MessageBox.Show("讀取的資料Text={0}", myData.GetString(0));
-                        return myData.GetString(0);
+                        // 如果沒有資料,顯示沒有資料的訊息
+                        MessageBox.Show("No data.");
                     }
-                    myData.Close();
+                    else
+                    {
+                        // 讀取資料並且顯示出來
+                        while (myData.Read())
+                        {
+
+                            product_name_textBox.Text = myData["product_name"].ToString();
+                            total_textBox.Text = myData["total"].ToString();
+
+                        }
+                        myData.Close();
+                    }
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                //Console.WriteLine("Error " + ex.Number + " : " + ex.Message);
                 MessageBox.Show("Error " + ex.Number + " : " + ex.Message);
             }
             //---------------------------------
 
-            //MySqlDataAdapter dat = new MySqlDataAdapter();
-            //DataTable dt = new DataTable();
-            //dat.SelectCommand = cmd;
-            //dat.Fill(dt);
-            //dat.Dispose();
 
-            //connect_database.Close();
-
-            return "error";
         }
 
-        private string setting_info_for_connect()
+        private string setting_info_for_connect(string sql_server, string sql_database, string sql_UID, string sql_password)
         {
-            string sql_server = "192.168.0.99";
-            string sql_UID = "johnson";
-            string sql_password = "johnson";
-            string Connect_Info =
-                "Server=" + sql_server + ";" +
-                "Database=ma430104_Production_Information;" +
+            return "Server=" + sql_server + ";" +
+                "Database=" + sql_database + ";" +
                 "uid=" + sql_UID + ";" +
                 "Pwd=" + sql_password + ";" +
                 "charset=utf8;" +
                 "SslMode=None;";
-
-
-
-            return Connect_Info;
         }
     }
 }

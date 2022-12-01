@@ -1,4 +1,4 @@
-﻿namespace serialport2
+﻿namespace serialport2   
 {
     partial class Form1
     {
@@ -54,6 +54,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.total_textBox = new System.Windows.Forms.TextBox();
+            this.station_comboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.Relay.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -241,6 +245,7 @@
             // 
             this.product_name_textBox.Location = new System.Drawing.Point(89, 66);
             this.product_name_textBox.Name = "product_name_textBox";
+            this.product_name_textBox.ReadOnly = true;
             this.product_name_textBox.Size = new System.Drawing.Size(100, 23);
             this.product_name_textBox.TabIndex = 8;
             this.product_name_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -273,13 +278,17 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.station_comboBox);
+            this.groupBox3.Controls.Add(this.total_textBox);
+            this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.mo_textBox);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.product_name_textBox);
             this.groupBox3.Location = new System.Drawing.Point(29, 187);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(346, 120);
+            this.groupBox3.Size = new System.Drawing.Size(346, 189);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SQL";
@@ -301,6 +310,41 @@
             this.label4.Size = new System.Drawing.Size(72, 13);
             this.label4.TabIndex = 26;
             this.label4.Text = "機種名稱：";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 114);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Total：";
+            // 
+            // total_textBox
+            // 
+            this.total_textBox.Location = new System.Drawing.Point(89, 104);
+            this.total_textBox.Name = "total_textBox";
+            this.total_textBox.ReadOnly = true;
+            this.total_textBox.Size = new System.Drawing.Size(100, 23);
+            this.total_textBox.TabIndex = 28;
+            this.total_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // station_comboBox
+            // 
+            this.station_comboBox.FormattingEnabled = true;
+            this.station_comboBox.Location = new System.Drawing.Point(89, 147);
+            this.station_comboBox.Name = "station_comboBox";
+            this.station_comboBox.Size = new System.Drawing.Size(100, 21);
+            this.station_comboBox.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 150);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Station：";
             // 
             // Form1
             // 
@@ -352,6 +396,10 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox total_textBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox station_comboBox;
     }
 }
 

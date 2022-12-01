@@ -90,11 +90,11 @@ namespace serialport2
             port_comboBox.Items.Clear();
             string[] serialPorts = System.IO.Ports.SerialPort.GetPortNames();
 
-            if (serialPorts.Length != 0)
+            if (serialPorts.Length != 0)// if has port
             {
                 port_comboBox.Text = serialPorts[0];
             }
-            else
+            else// if no port
             {
                 port_comboBox.Text = "";
                 MessageBox.Show("Not found any port number.\nPlease confirm the USB.");
@@ -204,14 +204,32 @@ namespace serialport2
 
         private void get_Station()
         {
-                                                                                         // IP, database, UID, password
+                                                                                        // IP, database, UID, password
             string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Station", "johnson", "johnson");
+
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
+
+            Open_database(connect_database);
+
+            //----------Quary----------------------------
+            String[] need_column = new string[] { "Data" };
+
+            String cmdText =
+                "SELECT Data " +
+                "FROM All_Station " +
+                "WHERE product_name='" + product_name_textBox.Text.Trim() + "'";
+
+            string[] myData = Quary_database(connect_database, cmdText, need_column);
+
+
+            station_comboBox.Items.AddRange(myData);
+            
+     
         }
 
         private void Get_ProductionName_and_Total()
         {
-            // IP, database, UID, password
+                                                                                        // IP, database, UID, password
             string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
@@ -219,39 +237,51 @@ namespace serialport2
             Open_database(connect_database);
 
             //----------Quary----------------------------
+            String[] need_column = new string[] { "product_name", "total" };
+            
             String cmdText =
                 "SELECT product_name,total " +
-                "FROM Production_Information " +
+                "FROM Production_Information " +    
                 "WHERE mo='" + mo_textBox.Text.Trim() + "'";
 
-            Quary_database(connect_database, cmdText);//data can show in textBox
-            //---------------------------------
-
+            string[] myData = Quary_database(connect_database, cmdText,need_column);
+            product_name_textBox.Text = myData[0];
+            total_textBox.Text = myData[1];
 
         }
 
-        private void Quary_database(MySqlConnection connect_database, string cmdText)
+        private string[] Quary_database(MySqlConnection connect_database, string cmdText,string[] need_column)
         {
             try
             {
                 MySqlCommand cmd = new MySqlCommand(cmdText, connect_database);
 
-                using (MySqlDataReader myData = cmd.ExecuteReader())
+                using (MySqlDataReader readData = cmd.ExecuteReader())
                 {
-                    if (!myData.HasRows)
+                    if (!readData.HasRows)
                     {
                         // 如果沒有資料,顯示沒有資料的訊息
                         MessageBox.Show("No data.");
                     }
                     else
                     {
-                        // 讀取資料並且顯示出來
-                        while (myData.Read())
+                        string[] myData = new string[need_column.Length];
+
+                        // 依照欄位讀取資料並且顯示出來
+                        while (readData.Read())
                         {
-                            product_name_textBox.Text = myData["product_name"].ToString();
-                            total_textBox.Text = myData["total"].ToString();
+                            for (int i =0; i < need_column.Length; i++)
+                            {
+                                myData[i]= readData[need_column[i]].ToString();
+                            }
+                            //myData[0] = readData["product_name"].ToString();
+                            //myData[1] = readData["total"].ToString();
+                            if (myData.Length == 1){
+                                MessageBox.Show("MyData: " + myData[0]);
+                            }
+                            return myData;
                         }
-                        myData.Close();
+                        readData.Close();
                     }
                 }
             }
@@ -259,6 +289,7 @@ namespace serialport2
             {
                 MessageBox.Show("Error " + ex.Number + " : " + ex.Message);
             }
+            return (new string[] { "No data(last)" });
         }
 
         private static void Open_database(MySqlConnection connect_database)

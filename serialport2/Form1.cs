@@ -171,7 +171,6 @@ namespace serialport2
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            //double[] dc = new double[5];
             double dc = 0.0;
             double sum_dc = 0.0f;
 
@@ -197,7 +196,7 @@ namespace serialport2
                 }
                 else
                 {
-                    get_ProductionName_and_Total();// Can show in textBox
+                    Get_ProductionName_and_Total();// Can show in textBox
                     get_Station();//Can show in comboBox
                 }
             }
@@ -205,36 +204,19 @@ namespace serialport2
 
         private void get_Station()
         {
-
+                                                                                         // IP, database, UID, password
+            string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Station", "johnson", "johnson");
+            MySqlConnection connect_database = new MySqlConnection(Connect_Info);
         }
 
-        private void get_ProductionName_and_Total()
+        private void Get_ProductionName_and_Total()
         {
             // IP, database, UID, password
             string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
 
-            //------Connect---------------------------------------
-            try
-            {
-                connect_database.Open();
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                switch (ex.Number)
-                {
-                    case 0:
-                        Console.WriteLine("無法連線到資料庫.");
-                        MessageBox.Show("Could not connect to database.");
-                        break;
-                    case 1045:
-                        Console.WriteLine("The user account or password is wrong, please try again.");
-                        break;
-                }
-            }
-            //-----------------------------------------------------------
-
+            Open_database(connect_database);
 
             //----------Quary----------------------------
             String cmdText =
@@ -242,6 +224,14 @@ namespace serialport2
                 "FROM Production_Information " +
                 "WHERE mo='" + mo_textBox.Text.Trim() + "'";
 
+            Quary_database(connect_database, cmdText);//data can show in textBox
+            //---------------------------------
+
+
+        }
+
+        private void Quary_database(MySqlConnection connect_database, string cmdText)
+        {
             try
             {
                 MySqlCommand cmd = new MySqlCommand(cmdText, connect_database);
@@ -261,7 +251,6 @@ namespace serialport2
                             product_name_textBox.Text = myData["product_name"].ToString();
                             total_textBox.Text = myData["total"].ToString();
                         }
-
                         myData.Close();
                     }
                 }
@@ -270,9 +259,27 @@ namespace serialport2
             {
                 MessageBox.Show("Error " + ex.Number + " : " + ex.Message);
             }
-            //---------------------------------
+        }
 
-
+        private static void Open_database(MySqlConnection connect_database)
+        {
+            try
+            {
+                connect_database.Open();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        Console.WriteLine("無法連線到資料庫.");
+                        MessageBox.Show("Could not connect to database.");
+                        break;
+                    case 1045:
+                        Console.WriteLine("The user account or password is wrong, please try again.");
+                        break;
+                }
+            }
         }
 
         private string setting_info_for_connect(string sql_server, string sql_database, string sql_UID, string sql_password)

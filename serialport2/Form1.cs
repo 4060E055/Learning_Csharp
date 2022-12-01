@@ -38,18 +38,15 @@ namespace serialport2
                 {
                     serialPort1.Dispose();
                     connect_port();
-                    // MessageBox.Show("Linking again is " + serialPort1.IsOpen.ToString());
                 }
-                else if ((!serialPort1.IsOpen))// no error status
+                else if ((!serialPort1.IsOpen))// no error and no connected's status
                 {
                     connect_port();
-                    // MessageBox.Show("Linking is" + serialPort1.IsOpen.ToString());
                 }
 
             }
             catch (Exception a)
             {
-
                 Console.WriteLine("{0} Exception caught.", a);
             }
 
@@ -140,8 +137,8 @@ namespace serialport2
             Global.Number += 1;
             string receivedata = get_receive_message();
             Show_receive_message.AppendText(Global.Number + ":  " + receivedata + "  " + "\r\n");
-
         }
+
         private string get_receive_message()
         {
 
@@ -186,7 +183,6 @@ namespace serialport2
                 sum_dc += dc;
                 Show_receive_message.AppendText((i + 1) + ": " + dc.ToString() + "\r\n");
             }
-
             Show_receive_message.AppendText("Average： " + (sum_dc / 5).ToString());
         }
 
@@ -195,11 +191,9 @@ namespace serialport2
         {
             if (e.KeyCode == Keys.Enter)
             {
-
                 if (mo_textBox.Text == "")
                 {
                     MessageBox.Show("Please input the 工單.");
-
                 }
                 else
                 {
@@ -216,7 +210,7 @@ namespace serialport2
 
         private void get_ProductionName_and_Total()
         {
-
+            // IP, database, UID, password
             string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
@@ -248,7 +242,6 @@ namespace serialport2
                 "FROM Production_Information " +
                 "WHERE mo='" + mo_textBox.Text.Trim() + "'";
 
-
             try
             {
                 MySqlCommand cmd = new MySqlCommand(cmdText, connect_database);
@@ -265,11 +258,10 @@ namespace serialport2
                         // 讀取資料並且顯示出來
                         while (myData.Read())
                         {
-
                             product_name_textBox.Text = myData["product_name"].ToString();
                             total_textBox.Text = myData["total"].ToString();
-
                         }
+
                         myData.Close();
                     }
                 }

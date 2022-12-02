@@ -37,27 +37,27 @@
             this.label2 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.Relay = new System.Windows.Forms.GroupBox();
+            this.Disconnect_button = new System.Windows.Forms.Button();
             this.Show_receive_message = new System.Windows.Forms.TextBox();
             this.SendCommend = new System.Windows.Forms.Button();
             this.HIGH_button = new System.Windows.Forms.Button();
             this.LOW_button = new System.Windows.Forms.Button();
-            this.Disconnect_button = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Clear_button = new System.Windows.Forms.Button();
             this.Setting_button = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.Get_DC_button = new System.Windows.Forms.Button();
             this.mo_textBox = new System.Windows.Forms.TextBox();
             this.product_name_textBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.total_textBox = new System.Windows.Forms.TextBox();
-            this.station_comboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.station_comboBox = new System.Windows.Forms.ComboBox();
+            this.total_textBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.Relay.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -140,6 +140,17 @@
             this.Relay.TabStop = false;
             this.Relay.Text = "Connect";
             // 
+            // Disconnect_button
+            // 
+            this.Disconnect_button.Enabled = false;
+            this.Disconnect_button.Location = new System.Drawing.Point(226, 80);
+            this.Disconnect_button.Name = "Disconnect_button";
+            this.Disconnect_button.Size = new System.Drawing.Size(78, 23);
+            this.Disconnect_button.TabIndex = 11;
+            this.Disconnect_button.Text = "Disconnect";
+            this.Disconnect_button.UseVisualStyleBackColor = true;
+            this.Disconnect_button.Click += new System.EventHandler(this.Disconnect_button_Click);
+            // 
             // Show_receive_message
             // 
             this.Show_receive_message.Location = new System.Drawing.Point(6, 50);
@@ -182,17 +193,6 @@
             this.LOW_button.UseVisualStyleBackColor = true;
             this.LOW_button.Click += new System.EventHandler(this.LOW_Click);
             // 
-            // Disconnect_button
-            // 
-            this.Disconnect_button.Enabled = false;
-            this.Disconnect_button.Location = new System.Drawing.Point(226, 80);
-            this.Disconnect_button.Name = "Disconnect_button";
-            this.Disconnect_button.Size = new System.Drawing.Size(78, 23);
-            this.Disconnect_button.TabIndex = 11;
-            this.Disconnect_button.Text = "Disconnect";
-            this.Disconnect_button.UseVisualStyleBackColor = true;
-            this.Disconnect_button.Click += new System.EventHandler(this.Disconnect_button_Click);
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(6, 22);
@@ -201,15 +201,15 @@
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "Commend";
             // 
-            // button1
+            // Clear_button
             // 
-            this.button1.Location = new System.Drawing.Point(278, 114);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.Clear_button.Location = new System.Drawing.Point(278, 114);
+            this.Clear_button.Name = "Clear_button";
+            this.Clear_button.Size = new System.Drawing.Size(75, 23);
+            this.Clear_button.TabIndex = 10;
+            this.Clear_button.Text = "Clear";
+            this.Clear_button.UseVisualStyleBackColor = true;
+            this.Clear_button.Click += new System.EventHandler(this.Clear_button_Click);
             // 
             // Setting_button
             // 
@@ -221,15 +221,15 @@
             this.Setting_button.UseVisualStyleBackColor = true;
             this.Setting_button.Click += new System.EventHandler(this.Setting_button_Click);
             // 
-            // button2
+            // Get_DC_button
             // 
-            this.button2.Location = new System.Drawing.Point(292, 85);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(61, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Get DC";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Get_DC_button.Location = new System.Drawing.Point(292, 85);
+            this.Get_DC_button.Name = "Get_DC_button";
+            this.Get_DC_button.Size = new System.Drawing.Size(61, 23);
+            this.Get_DC_button.TabIndex = 5;
+            this.Get_DC_button.Text = "Get DC";
+            this.Get_DC_button.UseVisualStyleBackColor = true;
+            this.Get_DC_button.Click += new System.EventHandler(this.getDC_button_Click);
             // 
             // mo_textBox
             // 
@@ -237,7 +237,7 @@
             this.mo_textBox.Name = "mo_textBox";
             this.mo_textBox.Size = new System.Drawing.Size(100, 23);
             this.mo_textBox.TabIndex = 7;
-            this.mo_textBox.Text = "011017B0";
+            this.mo_textBox.Text = "T01094A0";
             this.mo_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.mo_textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mo_textBox_KeyDown);
             // 
@@ -263,13 +263,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.Get_DC_button);
             this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.Clear_button);
             this.groupBox2.Controls.Add(this.Setting_button);
             this.groupBox2.Controls.Add(this.Show_receive_message);
             this.groupBox2.Controls.Add(this.SendCommend);
-            this.groupBox2.Location = new System.Drawing.Point(381, 142);
+            this.groupBox2.Location = new System.Drawing.Point(403, 142);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(369, 155);
             this.groupBox2.TabIndex = 10;
@@ -293,32 +293,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SQL";
             // 
-            // label3
+            // label6
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "工單：";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(204, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Station：";
             // 
-            // label4
+            // station_comboBox
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 69);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "機種名稱：";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 114);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "Total：";
+            this.station_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.station_comboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.station_comboBox.FormattingEnabled = true;
+            this.station_comboBox.Location = new System.Drawing.Point(263, 22);
+            this.station_comboBox.Name = "station_comboBox";
+            this.station_comboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.station_comboBox.Size = new System.Drawing.Size(68, 21);
+            this.station_comboBox.TabIndex = 12;
             // 
             // total_textBox
             // 
@@ -329,22 +322,32 @@
             this.total_textBox.TabIndex = 28;
             this.total_textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // station_comboBox
+            // label5
             // 
-            this.station_comboBox.FormattingEnabled = true;
-            this.station_comboBox.Location = new System.Drawing.Point(89, 147);
-            this.station_comboBox.Name = "station_comboBox";
-            this.station_comboBox.Size = new System.Drawing.Size(100, 21);
-            this.station_comboBox.TabIndex = 12;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 114);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Total：";
             // 
-            // label6
+            // label4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 150);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 13);
-            this.label6.TabIndex = 29;
-            this.label6.Text = "Station：";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "機種名稱：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "工單：";
             // 
             // Form1
             // 
@@ -386,9 +389,9 @@
         private System.Windows.Forms.Button SendCommend;
         private System.Windows.Forms.TextBox Show_receive_message;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Clear_button;
         private System.Windows.Forms.Button Setting_button;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button Get_DC_button;
         private System.Windows.Forms.TextBox mo_textBox;
         private System.Windows.Forms.TextBox product_name_textBox;
         private System.Windows.Forms.GroupBox groupBox1;

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace serialport2
 {
@@ -156,7 +157,7 @@ namespace serialport2
             return receivedata;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Clear_button_Click(object sender, EventArgs e)
         {
             Show_receive_message.Text = "";
             Global.Number = 0;
@@ -169,7 +170,7 @@ namespace serialport2
             Show_receive_message.Text = "It's OK.\r\n";
         }
 
-        private async void button2_Click(object sender, EventArgs e)
+        private async void getDC_button_Click(object sender, EventArgs e)
         {
             double dc = 0.0;
             double sum_dc = 0.0f;
@@ -196,16 +197,22 @@ namespace serialport2
                 }
                 else
                 {
-                    Get_ProductionName_and_Total();// Can show in textBox
-                    get_Station();//Can show in comboBox
+                    Get_ProductName_and_Total();  //Result Can show in textBox
+                    Get_Station();  //Result can show in comboBox
+                    Get_CE_Station_Data();  
                 }
             }
         }
 
-        private void get_Station()
+        private void Get_CE_Station_Data()
         {
-                                                                                        // IP, database, UID, password
-            string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Station", "johnson", "johnson");
+           
+        }
+
+        private void Get_Station()
+        {
+            // IP, database, UID, password
+            string Connect_Info = setting_connect_info("192.168.0.99", "ma430104_Station", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
 
@@ -221,16 +228,25 @@ namespace serialport2
 
             string[] myData = Quary_database(connect_database, cmdText, need_column);
 
+            Add_to_comboBox(myData);// string to JSON (這段功能後續會配合資料庫改寫)
 
-            station_comboBox.Items.AddRange(myData);
-            
-     
         }
 
-        private void Get_ProductionName_and_Total()
+        private void Add_to_comboBox(string[] myData)
         {
-                                                                                        // IP, database, UID, password
-            string Connect_Info = setting_info_for_connect("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
+            JObject json = JObject.Parse(myData[0]);
+
+            foreach (JObject i in json["staton_name"])
+            {
+                station_comboBox.Items.Add((i["station"] + "\r\n"));
+            }
+            station_comboBox.SelectedIndex = 0;
+        }
+
+        private void Get_ProductName_and_Total()
+        {
+            // IP, database, UID, password
+            string Connect_Info = setting_connect_info("192.168.0.99", "ma430104_Production_Information", "johnson", "johnson");
 
             MySqlConnection connect_database = new MySqlConnection(Connect_Info);
 
@@ -238,19 +254,19 @@ namespace serialport2
 
             //----------Quary----------------------------
             String[] need_column = new string[] { "product_name", "total" };
-            
+
             String cmdText =
                 "SELECT product_name,total " +
-                "FROM Production_Information " +    
+                "FROM Production_Information " +
                 "WHERE mo='" + mo_textBox.Text.Trim() + "'";
 
-            string[] myData = Quary_database(connect_database, cmdText,need_column);
+            string[] myData = Quary_database(connect_database, cmdText, need_column);
             product_name_textBox.Text = myData[0];
             total_textBox.Text = myData[1];
 
         }
 
-        private string[] Quary_database(MySqlConnection connect_database, string cmdText,string[] need_column)
+        private string[] Quary_database(MySqlConnection connect_database, string cmdText, string[] need_column)
         {
             try
             {
@@ -270,21 +286,21 @@ namespace serialport2
                         // 依照欄位讀取資料並且顯示出來
                         while (readData.Read())
                         {
-                            for (int i =0; i < need_column.Length; i++)
+                            for (int i = 0; i < need_column.Length; i++)
                             {
-                                myData[i]= readData[need_column[i]].ToString();
+                                myData[i] = readData[need_column[i]].ToString();
                             }
-                            //myData[0] = readData["product_name"].ToString();
-                            //myData[1] = readData["total"].ToString();
-                            if (myData.Length == 1){
-                                MessageBox.Show("MyData: " + myData[0]);
-                            }
-                            return myData;
+  
+
+ 
                         }
-                        readData.Close();
+                        return myData;
                     }
+                    readData.Close();
                 }
+
             }
+
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
                 MessageBox.Show("Error " + ex.Number + " : " + ex.Message);
@@ -313,7 +329,7 @@ namespace serialport2
             }
         }
 
-        private string setting_info_for_connect(string sql_server, string sql_database, string sql_UID, string sql_password)
+        private string setting_connect_info(string sql_server, string sql_database, string sql_UID, string sql_password)
         {
             return "Server=" + sql_server + ";" +
                 "Database=" + sql_database + ";" +

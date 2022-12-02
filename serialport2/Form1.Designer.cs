@@ -53,11 +53,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.station_comboBox = new System.Windows.Forms.ComboBox();
+            this.station_number_comboBox = new System.Windows.Forms.ComboBox();
             this.total_textBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.Relay.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -278,8 +281,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.station_comboBox);
+            this.groupBox3.Controls.Add(this.station_number_comboBox);
             this.groupBox3.Controls.Add(this.total_textBox);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label4);
@@ -288,7 +294,7 @@
             this.groupBox3.Controls.Add(this.product_name_textBox);
             this.groupBox3.Location = new System.Drawing.Point(29, 187);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(346, 189);
+            this.groupBox3.Size = new System.Drawing.Size(350, 246);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "SQL";
@@ -302,16 +308,16 @@
             this.label6.TabIndex = 29;
             this.label6.Text = "Station：";
             // 
-            // station_comboBox
+            // station_number_comboBox
             // 
-            this.station_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.station_comboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.station_comboBox.FormattingEnabled = true;
-            this.station_comboBox.Location = new System.Drawing.Point(263, 22);
-            this.station_comboBox.Name = "station_comboBox";
-            this.station_comboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.station_comboBox.Size = new System.Drawing.Size(68, 21);
-            this.station_comboBox.TabIndex = 12;
+            this.station_number_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.station_number_comboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.station_number_comboBox.FormattingEnabled = true;
+            this.station_number_comboBox.Location = new System.Drawing.Point(263, 22);
+            this.station_number_comboBox.Name = "station_number_comboBox";
+            this.station_number_comboBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.station_number_comboBox.Size = new System.Drawing.Size(68, 21);
+            this.station_number_comboBox.TabIndex = 12;
             // 
             // total_textBox
             // 
@@ -348,6 +354,33 @@
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 25;
             this.label3.Text = "工單：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 153);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Database：";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 217);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(44, 13);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Total：";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 188);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 13);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Total：";
             // 
             // Form1
             // 
@@ -402,7 +435,10 @@
         private System.Windows.Forms.TextBox total_textBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox station_comboBox;
+        private System.Windows.Forms.ComboBox station_number_comboBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 

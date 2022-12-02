@@ -206,7 +206,26 @@ namespace serialport2
 
         private void Get_CE_Station_Data()
         {
-           
+            string Connect_Info = setting_connect_info("192.168.0.99", "ma430104_Station", "johnson", "johnson");
+            MySqlConnection connect_database = new MySqlConnection(Connect_Info);
+            Open_database(connect_database);
+
+            //----------Quary----------------------------
+            String[] need_column = new string[] { "database_name", "station_name", "station_data_name", "search_data_name", "log_data_name" };
+
+            String cmdText =
+                "SELECT database_name,station_name,station_data_name,search_data_name,log_data_name " +
+                "FROM CE_Station " +
+                "WHERE product_name='" + product_name_textBox.Text.Trim() + 
+                      "' and station_number='" +station_number_comboBox.Text.Trim() + "'";
+
+            string[] myData = Quary_database(connect_database, cmdText, need_column);
+
+            Console.WriteLine("myData is：" );
+            foreach (string i in myData)
+            {
+                Console.WriteLine(i);
+            }
         }
 
         private void Get_Station()
@@ -238,9 +257,9 @@ namespace serialport2
 
             foreach (JObject i in json["staton_name"])
             {
-                station_comboBox.Items.Add((i["station"] + "\r\n"));
+                station_number_comboBox.Items.Add((i["station"] + "\r\n"));
             }
-            station_comboBox.SelectedIndex = 0;
+            station_number_comboBox.SelectedIndex = 0;
         }
 
         private void Get_ProductName_and_Total()
